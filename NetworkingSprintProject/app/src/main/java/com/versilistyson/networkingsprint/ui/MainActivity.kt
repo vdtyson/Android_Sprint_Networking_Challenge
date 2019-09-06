@@ -17,10 +17,12 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity(), Callback<List<Pokemon>> {
-
+    companion object {
+        var filteredPokemonList: MutableList<Pokemon> = arrayListOf()
+        var favoritePokemonList: MutableList<Pokemon> = arrayListOf()
+    }
     private lateinit var pokemonAdapter: PokemonListAdapter
-    var filteredPokemonList: MutableList<Pokemon> = arrayListOf()
-    var favoritePokemonList: MutableList<Pokemon> = arrayListOf()
+
 
     override fun onFailure(call: Call<List<Pokemon>>, t: Throwable) {
         Toast.makeText(this,"The call failed", Toast.LENGTH_SHORT).show()

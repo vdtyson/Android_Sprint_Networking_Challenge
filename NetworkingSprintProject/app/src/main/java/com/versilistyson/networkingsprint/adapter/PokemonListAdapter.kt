@@ -25,7 +25,7 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
         var favSwitch =  view.favorite_switch as Switch
         fun onClickListener(position: Pokemon) {
             favSwitch.setOnClickListener {
-                if(favSwitch.isChecked && !filteredPokemonList.contains())
+           //     if(favSwitch.isChecked && !filteredPokemonList.contains())
             }
         }
     }

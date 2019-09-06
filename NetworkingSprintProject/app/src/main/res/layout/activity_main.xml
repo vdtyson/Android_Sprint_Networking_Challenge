@@ -6,18 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <androidx.appcompat.widget.SearchView
+    <EditText
+        android:inputType="text"
         android:id="@+id/pokemon_search_view"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <Button
+        app:layout_constraintTop_toBottomOf="@id/pokemon_search_view"
+        android:id="@+id/search_main"
+        android:text="search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/favorites"
+        app:layout_constraintTop_toBottomOf="@id/search_main"
+        android:text="Favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/history"
+        app:layout_constraintTop_toBottomOf="@+id/favorites"
+        android:text="History"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:scrollbars="vertical"
         android:id="@+id/rv_pokemon"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_search_view"
+        app:layout_constraintTop_toBottomOf="@id/history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

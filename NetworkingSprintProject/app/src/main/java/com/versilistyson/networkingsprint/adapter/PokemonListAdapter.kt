@@ -1,5 +1,8 @@
 package com.versilistyson.networkingsprint.adapter
 
+import android.app.Activity
+import android.content.Intent
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,32 +10,36 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.versilistyson.networkingsprint.R
 import com.versilistyson.networkingsprint.model.Pokemon
 import com.versilistyson.networkingsprint.model.PokemonList
+import com.versilistyson.networkingsprint.ui.DetailActivity
 import com.versilistyson.networkingsprint.ui.MainActivity
-import com.versilistyson.networkingsprint.ui.MainActivity.Companion.filteredPokemonList
 import kotlinx.android.synthetic.main.pokemon_list_cardview.view.*
+import java.io.Serializable
 
 class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    companion object {
+        const val POKEMON = "POKEMON"
+    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var pokemonButton = view.cv_detail_button as Button
         var cardView = view.poke_cv
         var pokeSprite = view.cv_poke_image as ImageView
         var pokeName = view.cv_poke_name as TextView
         var pokeId = view.cv_poke_id as TextView
         var favSwitch =  view.favorite_switch as Switch
-        fun onClickListener(position: Pokemon) {
-            favSwitch.setOnClickListener {
-           //     if(favSwitch.isChecked && !filteredPokemonList.contains())
-            }
-        }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.pokemon_list_cardview, parent,  false)
-        return ViewHolder(viewGroup)
+        val holder = ViewHolder(viewGroup)
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +47,9 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
     }
 
     override fun onBindViewHolder(holder: PokemonListAdapter.ViewHolder, position: Int) {
+        val pokemon = items[position]
+        MainActivity.pokeList.add(pokemon)
+        val context = holder.cardView.context
         holder.pokeId.text = items[position].id.toString()
         holder.pokeName.text = items[position].name
         Picasso.get()
@@ -47,7 +57,18 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
             .resize(100,100)
             .centerCrop()
             .into(holder.pokeSprite)
-        holder
+        holder.favSwitch.setOnClickListener {
+            if(!pokemon.favorited && holder.favSwitch.isChecked) {
+                pokemon.favorited = true
+            } else if (pokemon.favorited && !holder.favSwitch.isChecked) {
+                pokemon.favorited = false
+            }
+        }
+        holder.pokemonButton.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(POKEMON, pokemon as Serializable)
+            context.startActivity(intent)
+        }
     }
 
     fun update(modelList:List<Pokemon>){
@@ -56,4 +77,8 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
     }
 
 
+}
+interface UserClickCallbacks {
+    fun onButtonClick(pokemon: Pokemon)
+    fun onSwitchClick(pokemon: Pokemon)
 }

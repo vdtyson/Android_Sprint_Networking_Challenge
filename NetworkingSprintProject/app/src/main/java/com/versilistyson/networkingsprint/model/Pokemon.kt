@@ -1,23 +1,11 @@
 package com.versilistyson.networkingsprint.model
 
 data class Pokemon(
-    val favorited: Boolean,
+    var favorited: Boolean,
     val abilities: List<Ability>,
-    val base_experience: Int,
-    val forms: List<Form>,
-    val game_indices: List<GameIndice>,
-    val height: Int,
-    val held_items: List<HeldItem>,
     val id: Int,
-    val is_default: Boolean,
-    val location_area_encounters: List<LocationAreaEncounter>,
-    val moves: List<Move>,
     val name: String,
-    val order: Int,
-    val species: Species,
     val sprites: Sprites,
-    val stats: List<Stat>,
-    val types: List<Type>,
-    val weight: Int
+    val types: List<Type>
 )
 class PokemonList (val pokeList: MutableList<Pokemon>)

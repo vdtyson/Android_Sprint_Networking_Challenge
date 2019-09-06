@@ -16,13 +16,10 @@ import java.util.concurrent.TimeUnit
 interface GetPokemon {
 
     @GET("pokemon/")
-    fun getPokemon(): Call<List<Pokemon>>
+    fun getPokemon(): Call<Pokemon>
 
     @GET("pokemon/{name}")
-    fun getPokemonByName(@Query("name") name: String): Call<List<Pokemon>>
-
-    @GET("pokemon/{id}")
-    fun getPokemonById(@Path("id") id: Int): Call<List<Pokemon>>
+    fun getPokemonByName(@Path("name") name: String): Call<Pokemon>
 
     companion object Factory {
 

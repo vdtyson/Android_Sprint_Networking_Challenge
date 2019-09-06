@@ -16,30 +16,26 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivity : AppCompatActivity(), Callback<List<Pokemon>> {
+class MainActivity : AppCompatActivity(), Callback<Pokemon> {
     companion object {
-        var filteredPokemonList: MutableList<Pokemon> = arrayListOf()
-        var favoritePokemonList: MutableList<Pokemon> = arrayListOf()
+        var pokeList: MutableList<Pokemon> = arrayListOf()
+        var search: MutableList<Pokemon> = arrayListOf()
+        var favoritesList: MutableList<Pokemon> =
+            pokeList.filter { it.favorited == true }.toMutableList()
     }
+
     private lateinit var pokemonAdapter: PokemonListAdapter
 
 
-    override fun onFailure(call: Call<List<Pokemon>>, t: Throwable) {
-        Toast.makeText(this,"The call failed", Toast.LENGTH_SHORT).show()
+    override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+        Toast.makeText(this, "The call failed", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onResponse(call: Call<List<Pokemon>>, response: Response<List<Pokemon>>) {
+    override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
         if (response.isSuccessful) {
-            if(filteredPokemonList.isNotEmpty()) {
-
-                for (i in 0 until filteredPokemonList.size -1) {
-                    filteredPokemonList.removeAt(i)
-                }
-
-            }
-                filteredPokemonList = response.body()!!.toMutableList()
-                pokemonAdapter.update(filteredPokemonList)
-
+            search.clear()
+            pokeList.add(response.body()!!)
+            pokemonAdapter.update(search)
         } else {
             Toast.makeText(this, "was not successful", Toast.LENGTH_SHORT)
         }
@@ -49,23 +45,24 @@ class MainActivity : AppCompatActivity(), Callback<List<Pokemon>> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (favoritePokemonList.isNotEmpty() ) {
-            initRecyclerView(favoritePokemonList)
+        if (favoritesList.isNotEmpty()) {
+            pokemonAdapter.update(favoritesList)
         }
 
 
-
-        pokemon_search_view.setOnSearchClickListener {
+        search_main.setOnClickListener {
+            val input: String = pokemon_search_view.text.toString()
             val retriever = GetPokemon.create()
-            retriever.getPokemon().enqueue(this)
+            retriever.getPokemonByName(input).enqueue(this)
         }
-    }
 
-    private fun initRecyclerView(pokemonList: List<Pokemon>) {
-        rv_pokemon.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            pokemonAdapter = PokemonListAdapter(pokemonList)
-            adapter = pokemonAdapter
+
+        fun initRecyclerView(pokemonList: List<Pokemon>) {
+            rv_pokemon.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                pokemonAdapter = PokemonListAdapter(pokemonList)
+                adapter = pokemonAdapter
+            }
         }
     }
 }

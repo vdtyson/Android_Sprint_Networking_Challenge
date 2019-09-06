@@ -1,6 +1,7 @@
 package com.versilistyson.networkingsprint.model
 
 data class Pokemon(
+    val favorited: Boolean,
     val abilities: List<Ability>,
     val base_experience: Int,
     val forms: List<Form>,
@@ -19,4 +20,4 @@ data class Pokemon(
     val types: List<Type>,
     val weight: Int
 )
-class PokemonList (val pokeList: List<Pokemon>)
+class PokemonList (val pokeList: MutableList<Pokemon>)

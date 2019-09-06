@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:id="@+id/poke_cv"
     android:elevation="8dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="4dp"

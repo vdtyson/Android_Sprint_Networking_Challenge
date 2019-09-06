@@ -10,18 +10,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface GetPokemon {
 
     @GET("pokemon/")
-    fun getPokemon(): Call<PokemonList>
+    fun getPokemon(): Call<List<Pokemon>>
 
     @GET("pokemon/{name}")
-    fun getPokemonByName(@Path("name") name: String): Call<PokemonList>
+    fun getPokemonByName(@Query("name") name: String): Call<List<Pokemon>>
 
     @GET("pokemon/{id}")
-    fun getPokemonById(@Path("id") id: String): Call<PokemonList>
+    fun getPokemonById(@Path("id") id: Int): Call<List<Pokemon>>
 
     companion object Factory {
 

@@ -19,7 +19,7 @@ interface GetPokemon {
     fun getPokemon(): Call<Pokemon>
 
     @GET("pokemon/{name}")
-    fun getPokemonByName(@Path("name") name: String): Call<Pokemon>
+    fun getPokemonById(@Path("id") id: String): Call<Pokemon>
 
     companion object Factory {
 

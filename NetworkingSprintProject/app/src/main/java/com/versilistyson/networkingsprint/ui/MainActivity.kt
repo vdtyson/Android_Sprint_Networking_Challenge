@@ -2,14 +2,12 @@ package com.versilistyson.networkingsprint.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.networkingsprint.GetPokemon
 import com.versilistyson.networkingsprint.R
 import com.versilistyson.networkingsprint.adapter.PokemonListAdapter
 import com.versilistyson.networkingsprint.model.Pokemon
-import com.versilistyson.networkingsprint.model.PokemonList
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         search_main.setOnClickListener {
             val input: String = pokemon_search_view.text.toString()
             val retriever = GetPokemon.create()
-            retriever.getPokemonByName(input).enqueue(this)
+            retriever.getPokemonById(input).enqueue(this)
         }
 
         history.setOnClickListener {

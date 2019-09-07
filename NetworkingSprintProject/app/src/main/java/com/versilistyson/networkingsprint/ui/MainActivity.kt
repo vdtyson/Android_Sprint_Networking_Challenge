@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         search_main.setOnClickListener {
             val input: String = pokemon_search_view.text.toString()
             val retriever = GetPokemon.create()
-            retriever.getPokemonById(input).enqueue(this)
+            retriever.getPokemonById(input.toInt()).enqueue(this)
         }
 
         history.setOnClickListener {

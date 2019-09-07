@@ -61,10 +61,10 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
             .centerCrop()
             .into(holder.pokeSprite)
         holder.favSwitch.setOnClickListener {
-            if(!pokemon.favorited && holder.favSwitch.isChecked) {
-                pokemon.favorited = true
-            } else if (pokemon.favorited && !holder.favSwitch.isChecked) {
-                pokemon.favorited = false
+            if(!MainActivity.favoritesList.contains(pokemon) && holder.favSwitch.isChecked) {
+                MainActivity.favoritesList.add(pokemon)
+            } else if (MainActivity.favoritesList.contains(pokemon) && !holder.favSwitch.isChecked) {
+                MainActivity.favoritesList.remove(pokemon)
             }
         }
         holder.pokemonButton.setOnClickListener {

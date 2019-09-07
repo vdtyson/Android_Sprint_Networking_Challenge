@@ -18,8 +18,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
     companion object {
         var pokeList: MutableList<Pokemon> = arrayListOf()
         var search: MutableList<Pokemon> = arrayListOf()
-        var favoritesList: MutableList<Pokemon> =
-            pokeList.filter { it.favorited == true }.toMutableList()
+        var favoritesList: MutableList<Pokemon> = arrayListOf()
     }
 
     private lateinit var pokemonAdapter: PokemonListAdapter
@@ -33,9 +32,6 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         if (response.isSuccessful) {
             search.clear()
             search.add(response.body()!!)
-            val newList = pokeList
-            pokeList.clear()
-            pokeList = newList
             pokeList.add(response.body()!!)
             pokemonAdapter.update(search)
         } else {
@@ -47,11 +43,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (favoritesList.isNotEmpty()) {
-            initRecyclerView(favoritesList)
-        } else {
-            initRecyclerView(pokeList)
-        }
+        initRecyclerView(pokeList)
 
 
         search_main.setOnClickListener {

@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         setContentView(R.layout.activity_main)
 
         if (favoritesList.isNotEmpty()) {
-            pokemonAdapter.update(favoritesList)
+            initRecyclerView(favoritesList)
+        } else {
+            initRecyclerView(pokeList)
         }
 
 
@@ -55,14 +57,12 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
             val retriever = GetPokemon.create()
             retriever.getPokemonByName(input).enqueue(this)
         }
-
-
-        fun initRecyclerView(pokemonList: List<Pokemon>) {
-            rv_pokemon.apply {
-                layoutManager = LinearLayoutManager(this@MainActivity)
-                pokemonAdapter = PokemonListAdapter(pokemonList)
-                adapter = pokemonAdapter
-            }
+    }
+    fun initRecyclerView(pokemonList: List<Pokemon>) {
+        rv_pokemon.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            pokemonAdapter = PokemonListAdapter(pokemonList)
+            adapter = pokemonAdapter
         }
     }
 }

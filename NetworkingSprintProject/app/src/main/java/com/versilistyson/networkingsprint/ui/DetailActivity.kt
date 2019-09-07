@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         detail_type.text = pokemonTypes
         val pokeListClone = pokeList
         delete.setOnClickListener {
-            for (i in 0 until pokeListClone.size -2) {
+            for (i in 0 until pokeListClone.size -1) {
                if (pokeListClone[i].id == pokemonID.toInt()) {
                    pokeListClone.remove(pokeList[i])
                }

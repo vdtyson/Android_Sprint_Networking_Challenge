@@ -52,7 +52,6 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
 
     override fun onBindViewHolder(holder: PokemonListAdapter.ViewHolder, position: Int) {
         val pokemon = items[position]
-        MainActivity.pokeList.add(pokemon)
         val context = holder.cardView.context
         holder.pokeId.text = items[position].id.toString()
         holder.pokeName.text = items[position].name

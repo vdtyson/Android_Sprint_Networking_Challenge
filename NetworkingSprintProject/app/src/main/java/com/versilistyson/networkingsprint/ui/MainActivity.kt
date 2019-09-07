@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         if (response.isSuccessful) {
             search.clear()
             search.add(response.body()!!)
+            val newList = pokeList
+            pokeList.clear()
+            pokeList = newList
             pokeList.add(response.body()!!)
             pokemonAdapter.update(search)
         } else {

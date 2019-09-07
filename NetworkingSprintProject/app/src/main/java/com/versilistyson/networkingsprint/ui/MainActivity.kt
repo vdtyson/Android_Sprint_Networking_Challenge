@@ -57,6 +57,14 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
             val retriever = GetPokemon.create()
             retriever.getPokemonByName(input).enqueue(this)
         }
+
+        history.setOnClickListener {
+            pokemonAdapter.update(pokeList)
+        }
+
+        favorites.setOnClickListener {
+            pokemonAdapter.update(favoritesList)
+        }
     }
     fun initRecyclerView(pokemonList: List<Pokemon>) {
         rv_pokemon.apply {

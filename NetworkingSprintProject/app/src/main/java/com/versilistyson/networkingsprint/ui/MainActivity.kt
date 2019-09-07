@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
     override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
         if (response.isSuccessful) {
             search.clear()
+            search.add(response.body()!!)
             pokeList.add(response.body()!!)
             pokemonAdapter.update(search)
         } else {

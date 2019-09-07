@@ -18,7 +18,7 @@ interface GetPokemon {
     @GET("pokemon/")
     fun getPokemon(): Call<Pokemon>
 
-    @GET("pokemon/{name}")
+    @GET("pokemon/{id}")
     fun getPokemonById(@Path("id") id: Int): Call<Pokemon>
 
     companion object Factory {

@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import com.versilistyson.networkingsprint.R
 import com.versilistyson.networkingsprint.adapter.PokemonListAdapter
 import com.versilistyson.networkingsprint.model.Pokemon
+import com.versilistyson.networkingsprint.ui.MainActivity.Companion.pokeList
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -14,25 +15,28 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val pokemon: Pokemon = intent.getSerializableExtra(PokemonListAdapter.POKEMON) as Pokemon
+        val pokemonName = intent.getStringExtra(PokemonListAdapter.POKEMONNAME)
+        val pokemonTypes = intent.getStringExtra(PokemonListAdapter.POKEMONTYPE)
+        val pokemonPic = intent.getStringExtra(PokemonListAdapter.POKEMONPIC)
+        val pokemonID = intent.getStringExtra(PokemonListAdapter.POKEMONID)
+        val pokemonAbilities = intent.getStringExtra(PokemonListAdapter.POKEMONABILITY)
         Picasso.get()
-            .load(pokemon.sprites.front_default)
+            .load(pokemonPic)
             .resize(200,200)
             .centerCrop()
             .into(detail_iv)
-        detail_id.text = pokemon.id.toString()
-        detail_ability.text = pokemon.abilities.toString()
-        detail_name.text = pokemon.name
-        detail_type.text = pokemon.types.toString()
+        detail_id.text = pokemonID
+        detail_ability.text = pokemonAbilities
+        detail_name.text = pokemonName
+        detail_type.text = pokemonTypes
         delete.setOnClickListener {
-            MainActivity.pokeList.remove(pokemon)
+            for (i in 0 until MainActivity.pokeList.size -1) {
+               if (pokeList[i].id == pokemonID.toInt()) {
+                   pokeList.remove(pokeList[i])
+               }
+            }
             val intent = Intent(this, MainActivity:: class.java)
             startActivity(intent)
-        }
-        favorite.setOnClickListener {
-            if (!MainActivity.favoritesList.contains(pokemon)) {
-                pokemon.favorited = true
-            }
         }
         cancel.setOnClickListener {
             val intent = Intent(this, MainActivity:: class.java)

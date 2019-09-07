@@ -23,7 +23,11 @@ import java.io.Serializable
 
 class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
     companion object {
-        const val POKEMON = "POKEMON"
+        const val POKEMONNAME = "POKEMONNAME"
+        const val POKEMONID = "POKEMONID"
+        const val POKEMONTYPE = "POKEMONTYPE"
+        const val POKEMONPIC = "POKEMONPICK"
+        const val POKEMONABILITY = "POKEMONABILITY"
     }
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var pokemonButton = view.cv_detail_button as Button
@@ -66,7 +70,11 @@ class PokemonListAdapter(var items: List<Pokemon>) : RecyclerView.Adapter<Pokemo
         }
         holder.pokemonButton.setOnClickListener {
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(POKEMON, pokemon as Serializable)
+            intent.putExtra(POKEMONABILITY, pokemon.abilities.toString())
+            intent.putExtra(POKEMONID,pokemon.id.toString())
+            intent.putExtra(POKEMONPIC, pokemon.sprites.front_default)
+            intent.putExtra(POKEMONNAME,pokemon.name)
+            intent.putExtra(POKEMONTYPE, pokemon.types.toString())
             context.startActivity(intent)
         }
     }

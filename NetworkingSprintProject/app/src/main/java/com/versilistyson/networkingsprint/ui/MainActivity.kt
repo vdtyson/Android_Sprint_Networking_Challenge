@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         if (response.isSuccessful) {
             search.clear()
             search.add(response.body()!!)
-            pokeList.add(response.body()!!)
+            if (!pokeList.contains(response.body()!!)) {
+                pokeList.add(response.body()!!)
+            }
             pokemonAdapter.update(search)
         } else {
             Toast.makeText(this, "was not successful", Toast.LENGTH_SHORT)
@@ -48,8 +50,10 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
 
         search_main.setOnClickListener {
             val input: String = pokemon_search_view.text.toString()
-            val retriever = GetPokemon.create()
-            retriever.getPokemonById(input.toInt()).enqueue(this)
+            if (!input.isBlank() || !input.isEmpty()) {
+                val retriever = GetPokemon.create()
+                retriever.getPokemonById(input.toInt()).enqueue(this)
+            }
         }
 
         history.setOnClickListener {

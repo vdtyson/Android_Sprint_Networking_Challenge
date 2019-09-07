@@ -29,11 +29,13 @@ class DetailActivity : AppCompatActivity() {
         detail_ability.text = pokemonAbilities
         detail_name.text = pokemonName
         detail_type.text = pokemonTypes
+        val pokeListClone = pokeList
         delete.setOnClickListener {
-            for (i in 0 until MainActivity.pokeList.size -1) {
-               if (pokeList[i].id == pokemonID.toInt()) {
-                   pokeList.remove(pokeList[i])
+            for (i in 0 until pokeListClone.size -2) {
+               if (pokeListClone[i].id == pokemonID.toInt()) {
+                   pokeListClone.remove(pokeList[i])
                }
+                pokeList = pokeListClone
             }
             val intent = Intent(this, MainActivity:: class.java)
             startActivity(intent)
